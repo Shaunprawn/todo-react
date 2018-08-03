@@ -1,7 +1,7 @@
 class List extends React.Component {
   constructor(){
     super()
-    this.changeHandler = this.changeHandler.bind( this );
+    this.changeHandler = this.changeHandler.bind(this);
   }
 
   state = {
@@ -14,21 +14,39 @@ class List extends React.Component {
     console.log("change", event.target.value);
   }
 
-  render() {
-      // render the list with a map() here
+  addToList(event){
+    var listArr = this.state.list
+    var userInput = this.state.word
 
+    listArr.push(userInput)
+
+    this.setState({
+      list: listArr,
+      word: ''
+    })
+  }
+
+  
+
+  render() {
+
+    var toDo = this.state.list.map( (item) => {
+      return <li><p>{item}</p></li>
+    })
+      // render the list with a map() here
       console.log("rendering");
       return (
         <div className="list">
           <input onChange={this.changeHandler} value={this.state.word}/>
-          <button>add item</button>
+          <button onClick={()=>this.addToList(this.state.word)}>add item</button>
+          <ul>{toDo}</ul>
         </div>
       );
   }
 }
 
 ReactDOM.render(
-    <List/>,
+    <List />,
     document.getElementById('root')
 );
 
